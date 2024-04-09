@@ -1,0 +1,80 @@
++*In[15]:*+
+[source, ipython3]
+----
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+excel_file = "C:/Users/amals/OneDrive/Documents/salmo.xlsx"
+salmo = pd.read_excel(excel_file)
+
+#Create mean coverage
+mean_coverage = coverage_column.mean()
+
+#Sort for values above mean
+above_mean_coverage = coverage_column[coverage_column > mean_coverage]
+
+#Order in descending order
+above_mean_coverage_sorted = above_mean_coverage.sort_values(ascending=False)
+
+green_palette = sns.light_palette('green', n_colors=6, as_cmap=True)
+
+# Create the heatmap for 'Coverage'
+plt.figure(figsize=(2, 6))  # Adjust the figure size as needed
+sns.heatmap(above_mean_coverage_sorted.values.reshape(-1, 1), annot=True, fmt=".1f", cmap=green_palette, linewidths=.5, cbar=False, yticklabels=False)
+plt.title('Heatmap of Coverage Above Mean')
+plt.xlabel('Coverage')
+plt.ylabel('Peptides')
+plt.xticks([])
+plt.show()
+
+
+----
+
+
++*Out[15]:*+
+----
+![png](output_0_0.png)
+----
+
+
++*In[22]:*+
+[source, ipython3]
+----
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+excel_file = "C:/Users/amals/OneDrive/Documents/salmo.xlsx"
+salmo = pd.read_excel(excel_file)
+coverage_column = pd.to_numeric(salmo['PSM'], errors='coerce').dropna()
+mean_coverage = coverage_column.mean()
+
+above_mean_coverage = coverage_column[coverage_column > mean_coverage]
+
+
+above_mean_coverage_sorted = above_mean_coverage.sort_values(ascending=False)
+
+green_palette = sns.light_palette('green', n_colors=5, as_cmap=True)
+
+#Heatmap of 'Sequence Match' column
+plt.figure(figsize=(2, 6))  
+sns.heatmap(above_mean_coverage_sorted.values.reshape(-1, 1), annot=True, fmt=".1f", cmap=green_palette, linewidths=.5, cbar=False, yticklabels=False)
+plt.title('Heatmap of PSMs Above Mean')
+plt.xlabel('Sequence Match')
+plt.ylabel('Peptides')
+plt.xticks([])
+plt.show()
+----
+
+
++*Out[22]:*+
+----
+![png](output_1_0.png)
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
